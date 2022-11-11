@@ -12,4 +12,8 @@ if response.status_code != 200:
 else:
    soup = BeautifulSoup(response.text,'html.parser')
    jobs = soup.find_all('section',class_='jobs')
-   print(jobs)
+   for job_section in jobs:
+     job_posts = job_section.find_all("li")
+     for post in job_posts:
+       print(post)
+       print("///////////////////////////////////////////")
