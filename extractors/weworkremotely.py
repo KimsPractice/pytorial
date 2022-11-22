@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def extract_weworkremotely_jobs(keyword):
 
-  BASE_URL = "https://weworkremotely.com/remote-jobs/search?utf8=✓&term="
+  base_url = "https://weworkremotely.com/remote-jobs/search?utf8=✓&term="
 
   response = get(f"{BASE_URL}{keyword}")
 
