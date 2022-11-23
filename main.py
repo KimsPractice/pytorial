@@ -12,7 +12,13 @@ base_url = "https://kr.indeed.com/jobs?q="
 search_term = "python"
 
 browser = webdriver.Chrome(options=options)
-
 browser.get(f"{base_url}{search_term}")
 
-print(browser.page_source)
+soup = BeautifulSoup(browser.page_source,"html.parser")
+job_lists = soup.find('ul', class_='jobsearch-ResultsList')
+jobs = job_lists.find_all('li',recursive=False)
+
+for job in jobs:
+  zone = job.find("div",class_="mosaic-zone")
+  if zone == None:
+    print("job li")
