@@ -14,6 +14,7 @@ search_term = "python"
 browser = webdriver.Chrome(options=options)
 browser.get(f"{base_url}{search_term}")
 
+results=[]
 soup = BeautifulSoup(browser.page_source,"html.parser")
 job_lists = soup.find('ul', class_='jobsearch-ResultsList')
 jobs = job_lists.find_all('li',recursive=False)
@@ -21,4 +22,20 @@ jobs = job_lists.find_all('li',recursive=False)
 for job in jobs:
   zone = job.find("div",class_="mosaic-zone")
   if zone == None:
-    print("job li")
+    anchor = job.select_one("h2 a")
+    title = anchor['aria-label']
+    link = anchor['href']
+    
+    company = job.find("span",class_="companyName")
+    location = job.find("div",class_="companyLocation")
+
+    job_data = {
+      "link":f"https://kr.indeed.com{link}",
+      "company":company.string,
+      "locaion":location.string,
+      "position":title
+    }
+    results.append(job_data)
+for result in results:
+  print(result)
+  print("/////////////////")
