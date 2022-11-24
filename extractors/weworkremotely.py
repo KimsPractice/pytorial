@@ -1,11 +1,12 @@
 from requests import get
 from bs4 import BeautifulSoup
 
+
 def extract_weworkremotely_jobs(keyword):
 
   base_url = "https://weworkremotely.com/remote-jobs/search?utf8=✓&term="
 
-  response = get(f"{BASE_URL}{keyword}")
+  response = get(f"{base_url}{keyword}")
 
   if response.status_code != 200:
     print("Can't request website")
