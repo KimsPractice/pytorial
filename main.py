@@ -30,13 +30,16 @@ def get_page_count(keyword):
 
 def extractors_indeed_jobs(keyword):
   pages = get_page_count(keyword)
+  print("Found",pages,"pages")
+  results=[]
   for page in range(pages):
     base_url = "https://kr.indeed.com/jobs?q="
-    
+    final_url = f"{base_url}{keyword}&start={page*10}" 
+    print("Requesting",final_url)
     browser = webdriver.Chrome(options=options)
-    browser.get(f"{base_url}{keyword}")
+    browser.get(final_url)
     
-    results=[]
+    
     soup = BeautifulSoup(browser.page_source,"html.parser")
     job_lists = soup.find('ul', class_='jobsearch-ResultsList')
     jobs = job_lists.find_all('li',recursive=False)
@@ -57,7 +60,9 @@ def extractors_indeed_jobs(keyword):
           "locaion":location.string,
           "position":title
         }
-        results.append(job_data)
-    for result in results:
-      print(result)
-      print("/////////////////")
+        results.append(job_data)      
+  return results
+
+jobs = extractors_indeed_jobs("python")
+
+print(jobs)
