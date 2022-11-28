@@ -8,6 +8,13 @@ weworkremotely = extract_weworkremotely_jobs(keyword)
 
 jobs = indeed + weworkremotely
 
+file = open(f"{keyword}.csv","w",encoding="utf-8-sig")
+
+file.write("Position,Comapny,Location,URL\n")
+
 for job in jobs:
-  print(jobs)
-  print("//////////////////////////////////////////")
+  file.write(f"{job['position']},{job['company']},{job['location']},{job['link']}\n")
+
+file.close()
+
+print("done")
