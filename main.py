@@ -1,14 +1,11 @@
-from extractors.weworkremotely import extract_weworkremotely_jobs
-from extractors.indeed import extractors_indeed_jobs
-from file import save_to_file
+from flask import Flask
 
-keyword = input("What do you want to search for ???")
+app = Flask("JobScrapper")
 
-indeed = extractors_indeed_jobs(keyword)
-weworkremotely = extract_weworkremotely_jobs(keyword)
 
-jobs = indeed + weworkremotely
+@app.route("/")
+def home():
+  return "Hey there!"
 
-save_to_file(keyword,jobs)
 
-print("done")
+app.run("0.0.0.0")
