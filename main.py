@@ -1,4 +1,6 @@
-from flask import Flask,render_template
+from flask import Flask,render_template,request
+from extractors.indeed import extractors_indeed_jobs
+from extractors.weworkremotely import extract_weworkremotely_jobs
 
 app = Flask("JobScrapper")
 
@@ -8,8 +10,12 @@ def home():
   return render_template("home.html")
 
 @app.route("/search")
-def search():
-  return render_template("search.html")
+def hello():
+  keyword = request.args.get("keyword")
+  indeed = extractors_indeed_jobs(keyword)
+  weworkremotly = extract_weworkremotely_jobs(keyword)
+  jobs = inded + weworkremotly
+  return render_template("search.html" , keyword=keyword, jobs)
 
 
 app.run("0.0.0.0")
