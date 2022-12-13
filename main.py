@@ -14,8 +14,8 @@ def hello():
   keyword = request.args.get("keyword")
   indeed = extractors_indeed_jobs(keyword)
   weworkremotly = extract_weworkremotely_jobs(keyword)
-  jobs = inded + weworkremotly
-  return render_template("search.html" , keyword=keyword, jobs)
+  jobs = weworkremotly
+  return render_template("search.html" , keyword=keyword, jobs=jobs)
 
 
 app.run("0.0.0.0")
