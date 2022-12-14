@@ -4,6 +4,7 @@ from extractors.weworkremotely import extract_weworkremotely_jobs
 
 app = Flask("JobScrapper")
 
+db = {}
 
 @app.route("/")
 def home():
@@ -12,9 +13,13 @@ def home():
 @app.route("/search")
 def hello():
   keyword = request.args.get("keyword")
-  indeed = extractors_indeed_jobs(keyword)
-  weworkremotly = extract_weworkremotely_jobs(keyword)
-  jobs = weworkremotly
+  if keyword in db:
+    jobs = db[keyword]
+  else:
+    indeed = extractors_indeed_jobs(keyword)
+    weworkremotly = extract_weworkremotely_jobs(keyword)
+    jobs = weworkremotly
+    db[keyword] = jobs
   return render_template("search.html" , keyword=keyword, jobs=jobs)
 
 
